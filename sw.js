@@ -16,7 +16,10 @@ const PRECACHE = [
 ];
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(PRECACHE)).then(() => self.skipWaiting()));
+  // cache: 'reload' skips the browser's HTTP cache, so a fresh deploy never stores stale files.
+  e.waitUntil(caches.open(CACHE)
+    .then(c => c.addAll(PRECACHE.map(url => new Request(url, { cache: 'reload' }))))
+    .then(() => self.skipWaiting()));
 });
 
 self.addEventListener('activate', e => {
@@ -35,14 +38,15 @@ const save = (req, res) => {
 self.addEventListener('fetch', e => {
   const req = e.request;
   if (req.method !== 'GET') return;
-  // Pages: network first so edits show up straight away; the cached copy when offline.
-  if (req.mode === 'navigate') {
+  // Our own pages, CSS and icons: network first so edits show up straight away; the stored copy when offline.
+  if (new URL(req.url).origin === location.origin) {
     e.respondWith(
-      fetch(req).then(res => save(req, res))
-        .catch(() => caches.match(req, { ignoreSearch: true }).then(hit => hit || caches.match('{{ "/" | relative_url }}')))
+      fetch(req, { cache: 'no-cache' }).then(res => save(req, res))
+        .catch(() => caches.match(req, { ignoreSearch: true })
+          .then(hit => hit || (req.mode === 'navigate' ? caches.match('{{ "/" | relative_url }}') : Response.error())))
     );
     return;
   }
-  // CSS, fonts (incl. Google Fonts), icons: cache first, filled in as they're used.
+  // Google Fonts never change at a given URL: stored copy first, filled in as they're used.
   e.respondWith(caches.match(req).then(hit => hit || fetch(req).then(res => save(req, res))));
 });

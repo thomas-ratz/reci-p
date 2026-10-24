@@ -3,6 +3,7 @@ title: The Beast — Velvety Tiramisu
 description: Rich, velvety cream that holds its height reasonably well after chilling.
 version: 1 kg mascarpone, 400 ml whipping cream, 200 ml espresso, one savoiardi layer, coffee crumble
 rest: 12–16 h in the fridge
+tray: [36, 21, 5.5]
 tags: [dessert, make ahead]
 ingredients:
   - "Sabayon:"

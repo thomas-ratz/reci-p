@@ -21,6 +21,7 @@ layout: default
     <p class="meta">
       {% if page.time %}<span>{% include icon.html name="clock" %}<i>Time</i> {{ page.time }}</span>{% endif %}
       {% if page.rest %}<span>{% include icon.html name="hourglass" %}<i>Rest</i> {{ page.rest }}</span>{% endif %}
+      {% if page.tray %}<span>{% include icon.html name="ruler" %}<i>Tray</i> {{ page.tray | join: " × " }} cm</span>{% endif %}
       {% if page.serves %}<span>{% include icon.html name="users" %}<i>Serves</i> <b class="scalable lead">{{ page.serves }}</b></span>{% endif %}
       {% if page.source %}<span><i>From</i> {{ page.source }}</span>{% endif %}
     </p>
@@ -38,6 +39,19 @@ layout: default
         <span><i>Amount</i> <b id="x" aria-live="polite">1×</b></span>
         <button type="button" data-step="1" aria-label="Make more">{% include icon.html name="plus" px=16 %}</button>
       </div>
+      {% if page.tray %}
+      <div class="tray" id="tray" data-base="{{ page.tray | jsonify }}" hidden>
+        <span class="tray-label">Your tray <i>cm</i></span>
+        <div class="tray-inputs">
+          <input type="number" inputmode="decimal" min="1" step="0.5" value="{{ page.tray[0] }}" aria-label="Tray length in cm">
+          <span aria-hidden="true">×</span>
+          <input type="number" inputmode="decimal" min="1" step="0.5" value="{{ page.tray[1] }}" aria-label="Tray width in cm">
+          <span aria-hidden="true">×</span>
+          <input type="number" inputmode="decimal" min="0.5" step="0.5" value="{{ page.tray[2] }}" aria-label="Tray depth in cm">
+        </div>
+        <p class="tray-note" id="tray-note" aria-live="polite">Amounts fill a {{ page.tray | join: " × " }} cm tray.</p>
+      </div>
+      {% endif %}
       <ul>
         {% for i in page.ingredients %}
           {% assign first = i | slice: 0 %}
@@ -107,21 +121,38 @@ function scale(x) {
       if (html !== text) { const t = document.createElement('template'); t.innerHTML = html; node.replaceWith(t.content); }
     });
   }
-  document.getElementById('x').textContent = fmt(x) + '×';
 }
+// Final factor = amount stepper × tray factor (your tray's volume ÷ the recipe's tray volume).
 const STEPS = [.25, .5, .75, 1, 1.5, 2, 2.5, 3, 4, 5, 6];
-let at = STEPS.indexOf(1);
+let at = STEPS.indexOf(1), trayX = 1;
 const stepper = document.getElementById('scale');
 const stepBtns = stepper.querySelectorAll('button');
 function setStep(i) {
   at = Math.max(0, Math.min(STEPS.length - 1, i));
   stepBtns[0].disabled = at === 0;
   stepBtns[1].disabled = at === STEPS.length - 1;
-  scale(STEPS[at]);
+  document.getElementById('x').textContent = fmt(STEPS[at]) + '×';
+  scale(STEPS[at] * trayX);
 }
 stepper.hidden = false;
 stepBtns.forEach(b => b.addEventListener('click', () => setStep(at + +b.dataset.step)));
 setStep(at);
+
+const tray = document.getElementById('tray');
+if (tray) {
+  const base = JSON.parse(tray.dataset.base), vol = d => d[0] * d[1] * d[2];
+  const inputs = [...tray.querySelectorAll('input')], note = document.getElementById('tray-note');
+  const baseText = note.textContent;
+  tray.hidden = false;
+  inputs.forEach(inp => inp.addEventListener('input', () => {
+    const dims = inputs.map(i => parseFloat(i.value.replace(',', '.')));
+    if (!dims.every(n => n > 0)) return; // keep the last valid size while typing
+    trayX = vol(dims) / vol(base);
+    note.textContent = Math.abs(trayX - 1) < 0.005 ? baseText
+      : `Your tray holds ${Math.round(trayX * 100)}% of the original — amounts adjusted.`;
+    setStep(at);
+  }));
+}
 
 if ('wakeLock' in navigator) {
   const b = document.getElementById('wake');

@@ -199,23 +199,23 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; letter-spacing:
 .ingredients ul { list-style: none; margin: 0; padding: 0; }
 .ingredients li { border-bottom: 1px solid var(--border-subtle); }
 .ingredients label { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; font: 400 16px/1.4 var(--font-body); color: var(--text-primary); cursor: pointer; }
-.ingredients input {
+.ingredients input[type="checkbox"] {
   appearance: none; -webkit-appearance: none; margin: 0;
   width: 22px; height: 22px; flex: none; border-radius: 6px;
   border: 1.5px solid var(--border-default); background: var(--surface-raised);
   display: grid; place-content: center; cursor: pointer;
   transition: background var(--dur-fast);
 }
-.ingredients input::before {
+.ingredients input[type="checkbox"]::before {
   content: ""; width: 15px; height: 15px; transform: scale(0);
   background: var(--cream-50);
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / contain no-repeat;
           mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / contain no-repeat;
 }
-.ingredients input:checked { background: var(--action-primary); border-color: var(--action-primary); }
-.ingredients input:checked::before { transform: scale(1); }
-.ingredients input:focus-visible { border-color: var(--border-focus); border-radius: 6px; }
-.ingredients input:checked + span { color: var(--text-muted); text-decoration: line-through; }
+.ingredients input[type="checkbox"]:checked { background: var(--action-primary); border-color: var(--action-primary); }
+.ingredients input[type="checkbox"]:checked::before { transform: scale(1); }
+.ingredients input[type="checkbox"]:focus-visible { border-color: var(--border-focus); border-radius: 6px; }
+.ingredients input[type="checkbox"]:checked + span { color: var(--text-muted); text-decoration: line-through; }
 .ingredients .qty.lead, .ingredients strong { font-weight: 700; font-variant-numeric: tabular-nums; }
 .ingredients .group {
   font: 700 12px var(--font-body); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase;
@@ -244,6 +244,21 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; letter-spacing:
 .stepper > span { min-width: 104px; text-align: center; font-size: 15px; color: var(--text-primary); }
 .stepper i { font-style: normal; color: var(--text-muted); }
 .stepper b { font-weight: 700; font-variant-numeric: tabular-nums; }
+/* Tray size: DS small inputs */
+.tray { margin: -4px 0 20px; }
+.tray-label { display: block; margin-bottom: 6px; font-size: var(--text-small); font-weight: var(--weight-semibold); color: var(--text-primary); }
+.tray-label i { font-style: normal; font-weight: 400; color: var(--text-muted); }
+.tray-inputs { display: flex; align-items: center; gap: 6px; color: var(--text-muted); }
+.tray-inputs input {
+  width: 64px; height: var(--control-h-sm); padding: 0 8px;
+  font: 400 15px var(--font-body); font-variant-numeric: tabular-nums; text-align: center;
+  color: var(--text-primary); background: var(--surface-raised);
+  border: 1.5px solid var(--border-default); border-radius: var(--radius-sm);
+  transition: box-shadow var(--dur-fast), border-color var(--dur-fast);
+}
+.tray-inputs input:focus-visible { border-color: var(--border-focus); }
+.tray-note { margin: 8px 0 0; font-size: var(--text-caption); line-height: var(--lh-caption); color: var(--text-muted); }
+
 .scaled { text-decoration: underline dotted var(--orange-500); text-underline-offset: 3px; }
 
 /* Method */

@@ -13,6 +13,7 @@ description: One line about it.     # optional
 version: 1 kg mascarpone, 400 ml…   # optional, what makes this revision different
 time: 30 min                        # optional
 rest: 12–16 h in the fridge         # optional
+tray: [36, 21, 5.5]                 # optional, length × width × depth in cm the recipe fills
 serves: 4                           # optional
 source: Grandma                     # optional
 image: /assets/img/my-dish.jpg      # optional, put the photo in assets/img/
@@ -61,6 +62,9 @@ included automatically. Pages load fresh when online and from storage when offli
 The amount stepper in the ingredients panel goes from ¼× to 6×. It scales every number followed by a unit
 (g, kg, ml, l, tsp, tbsp, cup, tin, clove, egg…), the leading count of an ingredient line ("4 eggs"), and **bold**
 amounts in the steps. Temperatures, times and percentages are never touched.
+
+Recipes with a `tray:` also get a "Your tray" box: amounts scale by volume (your tray ÷ the recipe's tray),
+multiplied by the amount stepper — so 2× means two of your trays.
 
 ## Preview locally
 

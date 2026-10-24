@@ -1,0 +1,11 @@
+# Local Claude Code preview config
+.claude/
+
+# Jekyll build output (if you ever run jekyll build/serve without --destination)
+_site/
+.jekyll-cache/
+.jekyll-metadata
+
+# Windows
+Thumbs.db
+desktop.ini

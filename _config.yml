@@ -11,4 +11,12 @@ defaults:
   - scope: { type: recipes }
     values: { layout: recipe }
 
-exclude: [README.md]
+# Only the design system's CSS tokens are published; the rest is reference material.
+exclude:
+  - README.md
+  - design-system/components
+  - design-system/guidelines
+  - design-system/ui_kits
+  - design-system/ds-loader.js
+  - design-system/readme.md
+  - design-system/SKILL.md

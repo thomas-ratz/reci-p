@@ -1,0 +1,17 @@
+:root {
+  /* Shadows are tinted with brown, never grey */
+  --shadow-xs: 0 1px 2px oklch(0.29 0.042 48 / 0.08);
+  --shadow-sm: 0 2px 6px oklch(0.29 0.042 48 / 0.08), 0 1px 2px oklch(0.29 0.042 48 / 0.06);
+  --shadow-md: 0 8px 20px -6px oklch(0.29 0.042 48 / 0.16), 0 2px 4px oklch(0.29 0.042 48 / 0.06);
+  --shadow-lg: 0 24px 48px -12px oklch(0.29 0.042 48 / 0.24);
+  --focus-ring: 0 0 0 3px oklch(0.72 0.14 50 / 0.45);
+
+  --ease-out: cubic-bezier(0.22, 0.8, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 320ms;
+
+  --overlay: oklch(0.21 0.028 45 / 0.5);
+  --image-scrim: linear-gradient(180deg, oklch(0.21 0.028 45 / 0) 40%, oklch(0.21 0.028 45 / 0.72) 100%);
+}

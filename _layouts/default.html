@@ -4,13 +4,49 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.title }}</title>
+<meta name="theme-color" content="#fbf3e9">
+<script>
+// Theme: "light", "dark" or "auto" (follows the system). Runs before paint so there's no flash.
+(function () {
+  var media = matchMedia('(prefers-color-scheme: dark)'), choice;
+  try { choice = localStorage.getItem('theme'); } catch (e) {}
+  function apply(c) {
+    choice = c === 'light' || c === 'dark' ? c : 'auto';
+    var dark = choice === 'dark' || (choice === 'auto' && media.matches);
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+    document.querySelector('meta[name=theme-color]').content = dark ? '#1c110b' : '#fbf3e9';
+    document.querySelectorAll('.theme [data-theme-choice]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.themeChoice === choice); });
+  }
+  apply(choice);
+  media.addEventListener('change', function () { if (choice === 'auto') apply('auto'); });
+  window.setTheme = function (c) { try { localStorage.setItem('theme', c); } catch (e) {} apply(c); };
+  window.applyTheme = function () { apply(choice); };
+})();
+</script>
+<link rel="manifest" href="{{ '/manifest.webmanifest' | relative_url }}">
+<link rel="icon" type="image/png" sizes="192x192" href="{{ '/assets/icons/icon-192.png' | relative_url }}">
+<link rel="apple-touch-icon" href="{{ '/assets/icons/apple-touch-icon.png' | relative_url }}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400;600&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Big+Shoulders+Display:wght@700;900&display=swap">
+<link rel="stylesheet" href="{{ '/design-system/styles.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%23fff' stroke='%231f3fa6' stroke-width='4'/><circle cx='11' cy='12' r='1.5' fill='%231f3fa6'/><circle cx='20' cy='19' r='1.2' fill='%231f3fa6'/></svg>">
 </head>
 <body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+    <div class="theme" role="group" aria-label="Colour theme">
+      <button type="button" data-theme-choice="light" aria-label="Light" title="Light">{% include icon.html name="sun" px=16 %}</button>
+      <button type="button" data-theme-choice="dark" aria-label="Dark" title="Dark">{% include icon.html name="moon" px=16 %}</button>
+      <button type="button" data-theme-choice="auto" aria-label="Auto (match your device)" title="Auto">{% include icon.html name="monitor" px=16 %}</button>
+    </div>
+  </div>
+</header>
 {{ content }}
+<script>
+document.querySelectorAll('.theme [data-theme-choice]').forEach(b => b.addEventListener('click', () => setTheme(b.dataset.themeChoice)));
+applyTheme();
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('{{ "/sw.js" | relative_url }}');
+</script>
 </body>
 </html>

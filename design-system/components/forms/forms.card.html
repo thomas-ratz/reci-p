@@ -1,0 +1,21 @@
+<!-- @dsCard group="Components" viewport="700x330" name="Form controls" -->
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+<script src="../../ds-loader.js"></script>
+<style>body{padding:24px}</style></head><body><div id="root"></div>
+<script type="text/babel">
+const NS = window.DS;
+const { Button, IconButton, Icon, Input, Select, Checkbox, Radio, Switch, Stepper, Badge, Tag, Rating, RecipeMeta, RecipeCard, IngredientList, MethodStep, ImagePlaceholder, Tabs, Dialog, Toast, Tooltip } = NS;
+const Row = ({children, gap=12}) => <div style={{display:"flex",flexWrap:"wrap",alignItems:"center",gap}}>{children}</div>;
+const Col = ({children, gap=16}) => <div style={{display:"flex",flexDirection:"column",gap}}>{children}</div>;
+
+function App(){ const [c,setC]=React.useState(true),[u,setU]=React.useState("metric"),[sw,setSw]=React.useState(true),[n,setN]=React.useState(4); return <Col gap={20}>
+<div style={{display:"grid",gridTemplateColumns:"1.4fr 1fr",gap:16}}><Input icon="search" placeholder="Search recipes, ingredients…" /><Select options={["Most loved","Quickest","Newest"]}/></div>
+<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}><Input label="Email" placeholder="you@kitchen.com" hint="One letter a week. No spam."/><Input label="Prep time" defaultValue="abc" error="Use minutes, e.g. 20"/></div>
+<Row gap={24}><Checkbox label="Vegetarian" checked={c} onChange={setC}/><Radio name="u" value="metric" label="Metric" checked={u==="metric"} onChange={setU}/><Radio name="u" value="us" label="US cups" checked={u==="us"} onChange={setU}/><Switch label="Cook mode" checked={sw} onChange={setSw}/><Stepper value={n} onChange={setN}/></Row>
+</Col>; }
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script></body></html>

@@ -1,0 +1,21 @@
+<!-- @dsCard group="Components" viewport="700x220" name="Badges, tags, rating, meta" -->
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+<script src="../../ds-loader.js"></script>
+<style>body{padding:24px}</style></head><body><div id="root"></div>
+<script type="text/babel">
+const NS = window.DS;
+const { Button, IconButton, Icon, Input, Select, Checkbox, Radio, Switch, Stepper, Badge, Tag, Rating, RecipeMeta, RecipeCard, IngredientList, MethodStep, ImagePlaceholder, Tabs, Dialog, Toast, Tooltip } = NS;
+const Row = ({children, gap=12}) => <div style={{display:"flex",flexWrap:"wrap",alignItems:"center",gap}}>{children}</div>;
+const Col = ({children, gap=16}) => <div style={{display:"flex",flexDirection:"column",gap}}>{children}</div>;
+
+function App(){ const [sel,setSel]=React.useState("Soups"); return <Col gap={18}>
+<Row gap={8}><Badge>Neutral</Badge><Badge tone="accent">New</Badge><Badge tone="success" icon="leaf">Vegan</Badge><Badge tone="warning">Contains nuts</Badge><Badge tone="danger">Sold out</Badge><Badge tone="inverse">Editor’s pick</Badge></Row>
+<Row gap={8}>{["Soups","Pasta","Baking","Quick"].map(t=><Tag key={t} selected={sel===t} onClick={()=>setSel(t)}>{t}</Tag>)}<Tag onRemove={()=>{}}>Under 30 min</Tag></Row>
+<Row gap={28}><Rating value={4.7} count={213}/><RecipeMeta items={[{icon:"clock",value:"45 min"},{icon:"users",value:"Serves 4"},{icon:"flame",value:"Easy"}]}/></Row>
+</Col>; }
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script></body></html>

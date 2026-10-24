@@ -1,0 +1,21 @@
+<!-- @dsCard group="Components" viewport="700x420" name="Recipe cards" -->
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+<script src="../../ds-loader.js"></script>
+<style>body{padding:24px}</style></head><body><div id="root"></div>
+<script type="text/babel">
+const NS = window.DS;
+const { Button, IconButton, Icon, Input, Select, Checkbox, Radio, Switch, Stepper, Badge, Tag, Rating, RecipeMeta, RecipeCard, IngredientList, MethodStep, ImagePlaceholder, Tabs, Dialog, Toast, Tooltip } = NS;
+const Row = ({children, gap=12}) => <div style={{display:"flex",flexWrap:"wrap",alignItems:"center",gap}}>{children}</div>;
+const Col = ({children, gap=16}) => <div style={{display:"flex",flexDirection:"column",gap}}>{children}</div>;
+
+function App(){ const [s,setS]=React.useState(false); return <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1.2fr",gap:24,alignItems:"start"}}>
+<RecipeCard title="Brown butter pear cake" category="Baking" time="1 hr 10" serves="Serves 8" rating={4.8} ratingCount={213} badge="New" saved={s} onSave={()=>setS(!s)} onClick={()=>{}}/>
+<RecipeCard title="Slow Sunday ragù" category="Mains" time="3 hr" serves="Serves 6" rating={4.9} ratingCount={512} onSave={()=>{}} onClick={()=>{}}/>
+<Col gap={16}><RecipeCard layout="horizontal" title="Miso-buttered greens" category="Sides" time="15 min" onClick={()=>{}}/><RecipeCard layout="horizontal" title="Chai spiced granola" category="Breakfast" time="40 min" onClick={()=>{}}/></Col>
+</div>; }
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script></body></html>

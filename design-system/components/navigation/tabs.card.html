@@ -1,0 +1,20 @@
+<!-- @dsCard group="Components" viewport="700x150" name="Tabs" -->
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+<script src="../../ds-loader.js"></script>
+<style>body{padding:24px}</style></head><body><div id="root"></div>
+<script type="text/babel">
+const NS = window.DS;
+const { Button, IconButton, Icon, Input, Select, Checkbox, Radio, Switch, Stepper, Badge, Tag, Rating, RecipeMeta, RecipeCard, IngredientList, MethodStep, ImagePlaceholder, Tabs, Dialog, Toast, Tooltip } = NS;
+const Row = ({children, gap=12}) => <div style={{display:"flex",flexWrap:"wrap",alignItems:"center",gap}}>{children}</div>;
+const Col = ({children, gap=16}) => <div style={{display:"flex",flexDirection:"column",gap}}>{children}</div>;
+
+function App(){ const [t,setT]=React.useState("Method"),[u,setU]=React.useState("Metric"); return <Col gap={24}>
+<Tabs items={[{value:"Ingredients",label:"Ingredients",count:12},{value:"Method",label:"Method",count:6},{value:"Notes",label:"Notes"},{value:"Reviews",label:"Reviews",count:213}]} value={t} onChange={setT}/>
+<Tabs variant="pill" items={["Metric","US cups"]} value={u} onChange={setU}/>
+</Col>; }
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script></body></html>

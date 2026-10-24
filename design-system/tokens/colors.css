@@ -1,0 +1,63 @@
+:root {
+  /* Cream & beige — grounds */
+  --cream-50: oklch(0.985 0.008 80);
+  --cream-100: oklch(0.968 0.016 78);
+  --beige-200: oklch(0.93 0.028 76);
+  --beige-300: oklch(0.87 0.042 72);
+  --sand-400: oklch(0.77 0.058 68);
+  /* Browns — ink & structure */
+  --brown-500: oklch(0.60 0.068 60);
+  --brown-600: oklch(0.48 0.066 55);
+  --brown-700: oklch(0.38 0.056 50);
+  --brown-800: oklch(0.29 0.042 48);
+  --brown-900: oklch(0.21 0.028 45);
+  /* Orange — the accent (apricot → burnt) */
+  --orange-100: oklch(0.95 0.035 62);
+  --orange-200: oklch(0.89 0.07 58);
+  --orange-400: oklch(0.72 0.14 50);
+  --orange-500: oklch(0.64 0.16 45);
+  --orange-600: oklch(0.55 0.155 42);
+  --orange-700: oklch(0.46 0.13 40);
+  /* Semantic — kitchen colours */
+  --herb-100: oklch(0.94 0.035 125);
+  --herb-600: oklch(0.50 0.09 130);
+  --saffron-100: oklch(0.95 0.05 85);
+  --saffron-600: oklch(0.62 0.12 75);
+  --tomato-100: oklch(0.94 0.04 30);
+  --tomato-600: oklch(0.52 0.16 30);
+
+  /* Semantic aliases */
+  --surface-page: var(--cream-100);
+  --surface-raised: var(--cream-50);
+  --surface-sunken: var(--beige-200);
+  --surface-card: var(--cream-50);
+  --surface-inverse: var(--brown-900);
+  --surface-accent: var(--orange-100);
+
+  --text-primary: var(--brown-900);
+  --text-secondary: var(--brown-700);
+  --text-muted: var(--brown-600);
+  --text-inverse: var(--cream-50);
+  --text-accent: var(--orange-700);
+  --text-link: var(--orange-700);
+  --text-link-hover: var(--brown-900);
+
+  --border-subtle: var(--beige-300);
+  --border-default: var(--sand-400);
+  --border-strong: var(--brown-600);
+  --border-focus: var(--orange-500);
+
+  --action-primary: var(--orange-600);
+  --action-primary-hover: var(--orange-700);
+  --action-secondary: var(--brown-800);
+  --action-secondary-hover: var(--brown-900);
+  --action-tint: var(--beige-200);
+  --action-tint-hover: var(--beige-300);
+
+  --status-success: var(--herb-600);
+  --status-success-bg: var(--herb-100);
+  --status-warning: var(--saffron-600);
+  --status-warning-bg: var(--saffron-100);
+  --status-danger: var(--tomato-600);
+  --status-danger-bg: var(--tomato-100);
+}

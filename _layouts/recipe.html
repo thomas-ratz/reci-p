@@ -1,0 +1,60 @@
+---
+layout: default
+---
+<header class="band band--recipe">
+  <div class="wrap">
+    <a class="brand" href="{{ '/' | relative_url }}">← All recipes</a>
+    <h1>{{ page.title }}</h1>
+    {% if page.description %}<p class="lede">{{ page.description }}</p>{% endif %}
+    <div class="facts">
+      {% if page.time %}<p><span>Time</span>{{ page.time }}</p>{% endif %}
+      {% if page.serves %}<p><span>Serves</span>{{ page.serves }}</p>{% endif %}
+      {% if page.source %}<p><span>From</span>{{ page.source }}</p>{% endif %}
+      <button class="wake" id="wake" aria-pressed="false" hidden>Keep screen on</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap recipe">
+  {% if page.image %}<img class="photo" src="{{ page.image | relative_url }}" alt="{{ page.title }}">{% endif %}
+  <section class="plate ingredients" aria-labelledby="ing">
+    <h2 id="ing">Ingredients</h2>
+    <ul>
+      {% for i in page.ingredients %}
+        {% assign last = i | slice: -1 %}
+        {% if last == ":" %}
+          <li class="group">{{ i }}</li>
+        {% else %}
+          <li><label><input type="checkbox"> <span>{{ i }}</span></label></li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </section>
+  <section class="method">
+    {{ content }}
+  </section>
+</main>
+
+<script>
+document.querySelectorAll('.method ol > li').forEach(li => {
+  li.tabIndex = 0;
+  const toggle = () => li.classList.toggle('done');
+  li.addEventListener('click', toggle);
+  li.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+});
+if ('wakeLock' in navigator) {
+  const b = document.getElementById('wake');
+  let lock = null;
+  b.hidden = false;
+  b.addEventListener('click', async () => {
+    if (lock) { await lock.release(); lock = null; }
+    else {
+      try {
+        lock = await navigator.wakeLock.request('screen');
+        lock.addEventListener('release', () => { lock = null; b.setAttribute('aria-pressed', false); });
+      } catch (e) {}
+    }
+    b.setAttribute('aria-pressed', !!lock);
+  });
+}
+</script>

@@ -1,0 +1,14 @@
+title: Reci-p
+baseurl: /reci-p
+markdown: kramdown
+
+collections:
+  recipes:
+    output: true
+    permalink: /:name/
+
+defaults:
+  - scope: { type: recipes }
+    values: { layout: recipe }
+
+exclude: [README.md]
